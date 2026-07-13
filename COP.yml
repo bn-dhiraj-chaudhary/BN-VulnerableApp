@@ -2,8 +2,10 @@
 # Consumed by the Polaris/Coverity CLI (`polaris` or `cov-capture`) during the pipeline scan step.
 capture:
   build:
-    clean-command: "./gradlew clean"
-    build-command: "./gradlew build -x test"
+    cleanCommands:
+      - shell: [./gradlew, clean]
+    buildCommands:
+      - shell: [./gradlew, build, -x, test]
   files:
     exclude-regex: (build|\.git)/.*
   languages:
