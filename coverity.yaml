@@ -1,0 +1,14 @@
+capture:
+  build:
+    clean-command: './gradlew clean'
+    build-command: './gradlew build -x test'
+analyze:
+  cov-analyze-args:
+    - '--webapp-security'
+    - '--security'
+    - '--enable'
+    - 'HARDCODED_CREDENTIALS'
+    - '--enable'
+    - 'SQLI'
+    - '--enable'
+    - 'OS_CMD_INJECTION'
