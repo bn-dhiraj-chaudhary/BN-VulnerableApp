@@ -1,0 +1,27 @@
+# Coverity on Polaris (COP) capture/analyze configuration for BN-VulnerableApp.
+# Consumed by the Polaris/Coverity CLI (`polaris` or `cov-capture`) during the pipeline scan step.
+capture:
+  build:
+    cleanCommands:
+      - shell: [./gradlew, clean]
+    buildCommands:
+      - shell: [./gradlew, build, -x, test]
+  files:
+    exclude-regex: (build|\.git)/.*
+  languages:
+    include: [java]
+analyze:
+  mode: central
+  coverity:
+    cov-analyze:
+      - "--webapp-security"
+      - "--security"
+      - "--enable"
+      - "HARDCODED_CREDENTIALS"
+      - "--enable"
+      - "SQLI"
+      - "--enable"
+      - "OS_CMD_INJECTION"
+install:
+  coverity:
+    version: default

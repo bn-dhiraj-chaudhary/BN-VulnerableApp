@@ -49,12 +49,19 @@ spotless {
     java {
         // Don't enforce the license, just the format.
         clearSteps()
-        googleJavaFormat('1.17.0').aosp()
+        googleJavaFormat('1.19.2').aosp()
     }
     format 'javascript', {
     	target 'src/main/resources/**/*.js'
     	prettier().config(['filepath': 'file.js'])
   	}
+}
+
+// Polaris's automatic Gradle build capture always runs the plain `build`
+// task; it only needs compiled classes, so don't let a spotless lint
+// failure block capture.
+afterEvaluate {
+    tasks.check.dependsOn -= tasks.spotlessCheck
 }
 
 jib {
