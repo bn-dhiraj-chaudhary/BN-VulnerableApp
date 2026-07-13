@@ -59,9 +59,11 @@ spotless {
 
 // Polaris's automatic Gradle build capture always runs the plain `build`
 // task; it only needs compiled classes, so don't let a spotless lint
-// failure block capture.
+// failure block capture. The individual spotless*Check tasks run as part
+// of `build` regardless of `check`'s dependencies, so disable them directly.
 afterEvaluate {
-    tasks.check.dependsOn -= tasks.spotlessCheck
+    tasks.matching { it.name.startsWith('spotless') && it.name.endsWith('Check') }
+        .configureEach { enabled = false }
 }
 
 jib {
